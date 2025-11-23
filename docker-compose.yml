@@ -1,0 +1,39 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: pgvector_container
+    environment:
+      - POSTGRES_USER=langchain
+      - POSTGRES_PASSWORD=langchain
+      - POSTGRES_DB=langchain
+    ports:
+      - "6024:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    image: natnaelgetahun/ecma-rag:latest
+    container_name: ecma_rag_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=langchain
+      - DB_PASSWORD=langchain
+      - DB_NAME=langchain
+      # For Mac/Windows, use host.docker.internal to reach Ollama on host
+      # For Linux, use http://host.docker.internal:11434 if you add extra_hosts, 
+      # OR use the host's IP address (e.g., 172.17.0.1)
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - DATA_PATH=/app/Data
+    depends_on:
+      - db
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # Enables Linux to use host.docker.internal
+    volumes:
+      - hf_cache:/root/.cache/huggingface # Persist downloaded models
+
+volumes:
+  pgdata:
+  hf_cache:
