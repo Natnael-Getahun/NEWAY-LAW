@@ -6,9 +6,9 @@ This project is a specialized AI chat system designed to navigate the complex la
 
 ---
 
-## 🚀 [Start Here: Setup Guide (SETUP.md)](SETUP.md)
+##  [Start Here: Setup Guide (SETUP.md)](SETUP.md)
 
-### 🐳 Docker Quick Start (Recommended)
+###  Docker Quick Start (Recommended)
 If you just want to run the app without looking at the code:
 
 1.  **Install Docker Desktop** & **Ollama**.
